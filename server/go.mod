@@ -1,4 +1,4 @@
-module github.com/owenstrength/vinyl-ify
+module github.com/owenstrength/vinyl-ify/server
 
 go 1.22.0
 
