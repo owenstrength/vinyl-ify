@@ -15,10 +15,10 @@ func main() {
 
 	// Define routes
 	r.HandleFunc("/login", api.HandleLogin).Methods("GET")
-	r.HandleFunc("/spotify-callback", api.HandleSpotifyCallback)
+	r.HandleFunc("/callback", api.HandleSpotifyCallback)
 
 	// Start the server
-	port := ":8000"
+	port := "127.0.0.1:8000"
 	fmt.Printf("Server listening on port %s\n", port)
 	log.Fatal(http.ListenAndServe(port, r))
 }

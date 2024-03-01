@@ -1,6 +1,7 @@
 package api
 
 import (
+	"Server/config"
 	"Server/service"
 	"fmt"
 	"net/http"
@@ -9,7 +10,7 @@ import (
 )
 
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
-	cfg := LoadConfig()
+	cfg := config.LoadConfig()
 	fmt.Println(cfg)
 
 	// Construct the Spotify authorization URL
@@ -23,6 +24,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 func HandleSpotifyCallback(w http.ResponseWriter, r *http.Request) {
 	// Extract authorization code from query parameters
 	code := r.URL.Query().Get("code")
+	fmt.Println(code)
 	if code == "" {
 		http.Error(w, "Missing authorization code", http.StatusBadRequest)
 		return
@@ -35,8 +37,21 @@ func HandleSpotifyCallback(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Store access token securely in your backend, associate it with the authenticated user
-	fmt.Println(accessToken)
+	// Parse the access token to obtain user ID (assuming it's included)
+	// userID, err := service.ParseAccessToken(accessToken)
+	// if err != nil {
+	// 	http.Error(w, fmt.Sprintf("Failed to parse access token: %s", err.Error()), http.StatusInternalServerError)
+	// 	return
+	// }
+
+	// Set the token as a cookie
+	http.SetCookie(w, &http.Cookie{
+		Name:     "auth_token",
+		Value:    accessToken,
+		MaxAge:   3600, // Token expiration time
+		HttpOnly: true, // HTTP only cookie for security
+	})
+
 	// Redirect or respond to frontend
-	http.Redirect(w, r, "/success", http.StatusFound)
+	http.Redirect(w, r, "http://localhost:3000", http.StatusFound)
 }
