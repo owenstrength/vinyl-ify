@@ -2,7 +2,6 @@ package api
 
 import (
 	"Server/config"
-	"Server/service"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -23,33 +22,19 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 func HandleSpotifyCallback(w http.ResponseWriter, r *http.Request) {
 	// Extract authorization code from query parameters
-	code := r.URL.Query().Get("code")
-	fmt.Println(code)
-	if code == "" {
+	accessToken := r.URL.Query().Get("code")
+	fmt.Println(accessToken)
+	if accessToken == "" {
 		http.Error(w, "Missing authorization code", http.StatusBadRequest)
 		return
 	}
-
-	// Exchange authorization code for access token
-	accessToken, err := service.ExchangeCodeForAccessToken(code)
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Failed to exchange authorization code: %s", err.Error()), http.StatusInternalServerError)
-		return
-	}
-
-	// Parse the access token to obtain user ID (assuming it's included)
-	// userID, err := service.ParseAccessToken(accessToken)
-	// if err != nil {
-	// 	http.Error(w, fmt.Sprintf("Failed to parse access token: %s", err.Error()), http.StatusInternalServerError)
-	// 	return
-	// }
 
 	// Set the token as a cookie
 	http.SetCookie(w, &http.Cookie{
 		Name:     "auth_token",
 		Value:    accessToken,
-		MaxAge:   3600, // Token expiration time
-		HttpOnly: true, // HTTP only cookie for security
+		MaxAge:   3600,  // Token expiration time
+		HttpOnly: false, // HTTP only cookie for security. set to false for now, bad practice but we can fix this later
 	})
 
 	// Redirect or respond to frontend
