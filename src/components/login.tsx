@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { WavyBackground } from "../components/ui/wavy-background";
 import { FrontPageText } from "../components/frontpage_text";
 
 import { useState, useEffect } from "react";
