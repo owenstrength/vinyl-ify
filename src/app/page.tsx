@@ -6,6 +6,7 @@ import Cookies from "js-cookie";
 import { useState, useEffect } from "react";
 import Login from "@/components/login";
 import Welcome from "@/components/welcome";
+import Artists from "@/components/artists-comp";
 
 export default function Home() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -16,16 +17,32 @@ export default function Home() {
       setLoggedIn(true);
     }
     setLoaded(true);
+
   }, []);
 
 
   return (
     <main>
-      <WavyBackground className="max-w-4xl mx-auto pb-10">
-        {loaded ? <>
-          {loggedIn ? <Welcome /> : <Login />}
-        </> : <div />}
-      </WavyBackground>
+      <>
+        {loaded ? (
+          loggedIn ? (
+            <div className="flex flex-wrap justify-center">
+              <Welcome />
+              <div className="flex flex-wrap justify-center h-full items-center">
+                <div className="mx-auto">
+                  <Artists />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <WavyBackground>
+              <Login />
+            </WavyBackground>
+          )
+        ) : (
+          <div />
+        )}
+      </>
     </main>
   );
 }
