@@ -11,12 +11,16 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ name, image }) => {
 
     const handleClick = async () => {
         try {
-            const response = await fetch(`http://localhost:8000/vinyl/${name}`, {
+            const response = await fetch(`http://localhost:8000/vinyl?artist=${name}`, {
                 credentials: "include"
             });
             const data = await response.json();
-            // Process the data as needed
-            console.log(data);
+            if (response.ok) {
+                // Process the data as needed
+                console.log(data);
+            } else {
+                throw new Error('Request failed with status ' + response.status);
+            }
         } catch (error) {
             console.error(error);
         }

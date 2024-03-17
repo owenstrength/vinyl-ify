@@ -31,9 +31,10 @@ export default function Welcome() {
     }, []);
 
     return (
-        <div className="text-center">
-            <h1 className="text-4xl font-bold mt-[20%]">Welcome {username}</h1>
-            <p className="text-lg mb-4">Find your Favorite Artists on Vinyl</p>
+        <div className="text-center font-mono">
+            <h1 className="text-4xl font-bold mt-[10%] ">Welcome {username}</h1>
+            <p className="text-lg mb-4">Click on Your Favorite Artists</p>
+
         </div>
     );
 }

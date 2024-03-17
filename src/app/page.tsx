@@ -23,9 +23,10 @@ export default function Home() {
 
   return (
     <main>
-      <>
-        {loaded ? (
-          loggedIn ? (
+      {loaded ? (
+        loggedIn ? (
+          // probably make this a component and make it have a better background
+          <div className="bg-gradient-to-r from-gray-950 from-10% via-zinc-950 via-50% to-stone-950 to-90% h-screen">
             <div className="flex flex-wrap justify-center">
               <Welcome />
               <div className="flex flex-wrap justify-center h-full items-center">
@@ -34,15 +35,16 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          ) : (
-            <WavyBackground>
-              <Login />
-            </WavyBackground>
-          )
+          </div>
         ) : (
-          <div />
-        )}
-      </>
+          <WavyBackground>
+            <Login />
+          </WavyBackground>
+        )
+      ) : (
+        <div />
+      )}
+
     </main>
   );
 }

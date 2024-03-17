@@ -11,7 +11,7 @@ export default function Login() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setShowButton(true);
-        }, 4000);
+        }, 3200);
 
         return () => clearTimeout(timer);
     }, []);
