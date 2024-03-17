@@ -18,6 +18,7 @@ func main() {
 	r.HandleFunc("/callback", api.HandleSpotifyCallback)
 	r.HandleFunc("/me", api.HandleGetUser).Methods("GET")
 	r.HandleFunc("/artists", api.HandleGetArtists).Methods("GET")
+	r.HandleFunc("/vinyl", api.HandleVinylSearch).Methods("GET")
 
 	// Start the server
 	port := "127.0.0.1:8000"

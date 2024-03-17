@@ -101,7 +101,7 @@ func GetAuthToken(code string) (string, error) {
 
 func GetUserTopArtists(authJSON string) (string, error) {
 	// Make GET request to Spotify API
-	req, err := http.NewRequest("GET", "https://api.spotify.com/v1/me/top/artists", nil)
+	req, err := http.NewRequest("GET", "https://api.spotify.com/v1/me/top/artists?limit=30", nil)
 	if err != nil {
 		return "", err
 	}
