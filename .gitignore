@@ -49,3 +49,4 @@ config.go
 *.so
 
 *.dylib
+/pkg/mod/github.com/gorilla/mux@v1.8.1
