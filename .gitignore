@@ -38,5 +38,14 @@ next-env.d.ts
 # secret files
 config.go
 
-# golang stuff
-/pkg
+# Binaries for programs and plugins
+
+*.exe
+
+*.exe~
+
+*.dll
+
+*.so
+
+*.dylib
