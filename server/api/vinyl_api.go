@@ -3,7 +3,9 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"os/exec"
 )
 
 type Album struct {
@@ -26,11 +28,21 @@ func HandleVinylSearch(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Handling vinyl search for", artist)
 
-	// Example data for response
+	// run python ./service/vinyl_search.py
+	cmd := exec.Command("python", "./service/vinyl_search.py", artist)
+	out, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Println("Failed to get vinyls:", err)
+		http.Error(w, "Failed to get vinyls", http.StatusInternalServerError)
+		return
+	}
+
+	out = string(out)
+
 	response := Vinyl{
 		Artist: artist,
 		Albums: []Album{
-			{Title: "Album1", Links: []string{"Link1"}},
+			{Title: "ArtistSite", Links: []string{out}},
 			{Title: "Album2", Links: []string{"Link2"}},
 		},
 	}
