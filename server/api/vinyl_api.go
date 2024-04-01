@@ -9,8 +9,8 @@ import (
 )
 
 type Album struct {
-	Title string   `json:"title"`
-	Links []string `json:"links"`
+	Title string `json:"title"`
+	Link  string `json:"link"`
 }
 
 type Vinyl struct {
@@ -37,14 +37,35 @@ func HandleVinylSearch(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	out = string(out)
+	fmt.Println("Got vinyls:", string(out))
+
+	cmd2 := exec.Command("python", "./service/vinyl_10k_search.py", artist)
+	out2, err := cmd2.CombinedOutput()
+	if err != nil {
+		log.Println("Failed to get vinyls:", err)
+		http.Error(w, "Failed to get vinyls", http.StatusInternalServerError)
+		return
+	}
+
+	data := make(map[string]string)
+
+	// Unmarshal the JSON string into the map
+	err = json.Unmarshal(out2, &data)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	var albums []Album
+	albums = append(albums, Album{Title: "Artist Website", Link: string(out)})
+
+	for key, value := range data {
+		albums = append(albums, Album{Title: key, Link: value})
+	}
 
 	response := Vinyl{
 		Artist: artist,
-		Albums: []Album{
-			{Title: "ArtistSite", Links: []string{out}},
-			{Title: "Album2", Links: []string{"Link2"}},
-		},
+		Albums: albums,
 	}
 
 	// Convert response to JSON

@@ -4,7 +4,9 @@ import requests
 from bs4 import BeautifulSoup
 
 def search_vinyl(artist):
-    query = artist + ' vinyl'
+    query = artist.lower() + ' vinyl'
+    query = query.replace(' ', '+')
+    print(query)
     url = 'https://www.google.com/search?q=' + query
 
     # Send a GET request to Google search
@@ -22,7 +24,6 @@ def search_vinyl(artist):
             res.append(href[7:].split('&')[0])
         if len(res) == 3:
             break
-            
     return res[2]
 
 if __name__ == '__main__':
