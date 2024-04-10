@@ -27,7 +27,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ name, image }) => {
     };
 
     return (
-        <a target="_blank" rel="noreferrer" onClick={() => handleClick()}>
+        <a target="_blank" rel="noreferrer" >
             <div className="artist-card flex flex-col items-center transition-transform duration-500 transform hover:scale-125 rounded-lg">
                 <Image
                     className="w-36 h-36 object-cover rounded-md"
@@ -36,7 +36,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ name, image }) => {
                     width={144}
                     height={144}
                 />
-                <h1 className="text-left font-medium font-mono">{name}</h1>
+                <h1 className="text-center font-medium font-mono text-wrap max-w-44">{name}</h1>
             </div>
         </a>
     );
