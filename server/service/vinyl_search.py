@@ -6,7 +6,6 @@ from bs4 import BeautifulSoup
 def search_vinyl(artist):
     query = artist.lower() + ' vinyl'
     query = query.replace(' ', '+')
-    print(query)
     url = 'https://www.google.com/search?q=' + query
 
     # Send a GET request to Google search
