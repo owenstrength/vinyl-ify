@@ -2,6 +2,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import ArtistCard from "./artist-card";
+import Modal from "./albums-card";
 
 export default function Artists() {
     const [artists, setArtists] = useState<any[] | null>(null);
@@ -34,11 +35,11 @@ export default function Artists() {
 
         fetchData();
     }, [name]);
-    
-    
+
+
     useEffect(() => {
 
-        
+
 
         fetch("http://localhost:8000/artists", {
             credentials: "include"
@@ -61,37 +62,21 @@ export default function Artists() {
 
     return (
         <>
-        <div className="flex flex-wrap justify-center w-full">
-            {artists &&
-                artists.map((artist: any) => {
-                    return (
-                        <div key={artist.id} className="m-2 p-2">
-                            <div className="rounded-md">
-                                <a onClick={() => setName(artist.name)}>
-                                    <ArtistCard name={artist.name} image={artist.images[0].url} />
-                                </a>
-                            </div>
-                        </div>
-                    );
-                })}
-        </div>
-        {modalOpen && (
-            <div className="fixed inset-0 flex items-center justify-center z-50">
-                <div className="bg gray p-4 rounded-md">
-                    <button className="absolute top-2 right-2" onClick={closeModal}>
-                        Close
-                    </button>
-                    {modalContent && modalContent.albums.map((item: any) => {
+            <div className="flex flex-wrap justify-center w-full">
+                {artists &&
+                    artists.map((artist: any) => {
                         return (
-                            <div className="text-center font-medium font-mono text-wrap">
-                                <a href={item.link} target="_blank">{item.title}</a>
-                            </div>  
-                        )
-                    }
-                )}
-                </div>
+                            <div key={artist.id} className="m-2 p-2">
+                                <div className="rounded-md">
+                                    <a onClick={() => setName(artist.name)}>
+                                        <ArtistCard name={artist.name} image={artist.images[0].url} />
+                                    </a>
+                                </div>
+                            </div>
+                        );
+                    })}
             </div>
-        )}
+            <Modal isOpen={modalOpen} closeModal={closeModal} modalContent={modalContent} />
         </>
     );
 }

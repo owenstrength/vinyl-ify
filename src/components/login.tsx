@@ -4,6 +4,7 @@ import { FrontPageText } from "../components/frontpage_text";
 
 import { useState, useEffect } from "react";
 import { PinContainer } from "@/components/ui/3d-pin";
+// temp
 
 export default function Login() {
     const [showButton, setShowButton] = useState(false);
